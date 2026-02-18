@@ -1,0 +1,23 @@
+kyc-golden-source-poc/
+│
+├── docker-compose.yml
+│
+└── data-generator-java/
+    │
+    ├── Dockerfile
+    ├── pom.xml
+    ├── data-contract.md
+    │
+    └── src/main/java/com/example/datageneratorjava/
+        │
+        ├── DataGeneratorJavaApplication.java
+        │
+        ├── model/
+        │   ├── FenergoRecord.java
+        │   └── GearsRecord.java
+        │
+        ├── service/
+        │   └── CsvWriter.java
+        │
+        └── util/
+            └── FakerUtil.java

@@ -1,0 +1,8 @@
+version: "3.8"
+
+services:
+  data-generator:
+    build: ./data-generator-java
+    volumes:
+      - ./output:/output
+    command: ["S"]
