@@ -1,48 +1,52 @@
-package com.example.datageneratorjava.util;
+package com.example.datagenerator.util;
 
-import com.github.javafaker.Faker;
-import java.time.LocalDate;
-import java.util.Random;
+import com.example.datagenerator.model.FenergoRecord;
+import com.example.datagenerator.model.GearsRecord;
 
-public class FakerUtil {
+import java.io.*;
+import java.util.List;
 
-    static Faker faker;
+public class CsvWriter {
 
-    public static void init(long seed) {
-        faker = new Faker(new Random(seed));
+    public static void writeFenergo(List<FenergoRecord> records) {
+
+        try {
+            new File("output").mkdir();
+
+            BufferedWriter bw = new BufferedWriter(new FileWriter("output/fenergo.csv"));
+
+            bw.write("id,kyc_unified_id,customer_name,customer_type,country_code,risk_rating,snapshot_date\n");
+
+            for (FenergoRecord r : records) {
+                bw.write(r.id + "," + r.kycUnifiedId + "," + r.customerName + "," +
+                        r.customerType + "," + r.countryCode + "," +
+                        r.riskRating + "," + r.snapshotDate + "\n");
+            }
+
+            bw.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public static String customerName() {
-        return faker.company().name();
-    }
+    public static void writeGears(List<GearsRecord> records) {
 
-    public static String customerType() {
-        return faker.bool().bool() ? "INDIVIDUAL" : "CORPORATE";
-    }
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter("output/gears.csv"));
 
-    public static String countryCode() {
-        String[] c = {"IN","US","UK","FR"};
-        return c[faker.random().nextInt(4)];
-    }
+            bw.write("id,kyc_unified_id,account_status,transaction_count,total_value,snapshot_date\n");
 
-    public static String riskRating() {
-        String[] r = {"HIGH","MEDIUM","LOW"};
-        return r[faker.random().nextInt(3)];
-    }
+            for (GearsRecord r : records) {
+                bw.write(r.id + "," + r.kycUnifiedId + "," + r.accountStatus + "," +
+                        r.transactionCount + "," + r.totalValue + "," +
+                        r.snapshotDate + "\n");
+            }
 
-    public static String accountStatus() {
-        return faker.bool().bool() ? "ACTIVE" : "INACTIVE";
-    }
+            bw.close();
 
-    public static int transactionCount() {
-        return faker.number().numberBetween(10, 5000);
-    }
-
-    public static double totalValue() {
-        return faker.number().randomDouble(2, 1000, 500000);
-    }
-
-    public static String snapshotDate() {
-        return LocalDate.now().toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
