@@ -1,25 +1,33 @@
-# Java-2 Synthetic Data Contract
+# 6. Source → Canonical Mapping
 
-## fenergo.csv
+---
 
-kyc_unified_id  
-customer_name  
-customer_type  
-country_code  
-risk_rating  
-snapshot_date
+## FENERGO Mapping
 
-## gears.csv
+| Source Column | Canonical Column |
+|---------------|------------------|
+customer_name | customer_name  
+customer_type | customer_type  
+country_code | country_code  
+risk_rating | risk_rating  
+snapshot_date | snapshot_date  
 
-kyc_unified_id  
-account_status  
-transaction_count  
-total_value  
-snapshot_date
+---
 
-Sizes:
-S = 10k  
-M = 100k  
-L = 1M
+## GEARS Mapping
 
-Seeded Faker for deterministic output.
+| Source Column | Canonical Column |
+|---------------|------------------|
+account_status | status  
+transaction_count | transaction_count  
+total_value | total_value  
+snapshot_date | snapshot_date  
+
+---
+
+## Identity Mapping
+
+| Source | Field |
+|--------|------|
+FENERGO | kyc_unified_id  
+GEARS | kyc_unified_id  
