@@ -30,3 +30,4 @@ echo ",Sydney,1998-01-01,P9999999,AU" >> data/kyc.csv
 
 great_expectations datasource new
 /usr/app/great_expectations/data
+find / -name kyc.csv 2>/dev/null
