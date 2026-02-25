@@ -27,3 +27,6 @@ echo "name,address,dob,passport,country" > data/kyc.csv
 echo "Adithya,Bangalore,1999-04-12,P1234567,IN" >> data/kyc.csv
 echo "Rahul,Chennai,2000-02-21,P7654321,IN" >> data/kyc.csv
 echo ",Sydney,1998-01-01,P9999999,AU" >> data/kyc.csv
+
+great_expectations datasource new
+/usr/app/great_expectations/data
