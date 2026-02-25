@@ -12,8 +12,12 @@ public class DataGeneratorService {
     public void generate() {
 
         String sizeEnv = System.getenv().getOrDefault("SIZE", "S");
-        long seed = Long.parseLong(System.getenv().getOrDefault("SEED", "42"));
-        String snap = System.getenv().getOrDefault("SNAPSHOT_DATE", "2026-02-01");
+long seed = Long.parseLong(System.getenv().getOrDefault("SEED", "42"));
+String snap = System.getenv().getOrDefault("SNAPSHOT_DATE", "2026-02-01");
+
+boolean delta = Boolean.parseBoolean(
+        System.getenv().getOrDefault("DELTA", "false")
+);
 
         int size;
         switch (sizeEnv) {
@@ -35,27 +39,41 @@ public class DataGeneratorService {
 
         for (int i = 1; i <= size; i++) {
 
-            String kyc = String.format("KYC%06d", i);
+    String kyc = String.format("KYC%06d", i);
 
-            fenergo.add(new FenergoRecord(
-                    i,
-                    kyc,
-                    "Customer_" + i,
-                    random.nextBoolean() ? "Individual" : "Business",
-                    "IN",
-                    random.nextBoolean() ? "LOW" : "HIGH",
-                    snapshotDate
-            ));
+    // Base deterministic values
+    String risk = random.nextBoolean() ? "LOW" : "HIGH";
+    String status = random.nextBoolean() ? "ACTIVE" : "SUSPENDED";
+    int txnCount = random.nextInt(50);
+    int totalValue = random.nextInt(500000);
 
-            gears.add(new GearsRecord(
-                    i,
-                    kyc,
-                    random.nextBoolean() ? "ACTIVE" : "SUSPENDED",
-                    random.nextInt(50),
-                    random.nextInt(500000),
-                    snapshotDate
-            ));
-        }
+    // DELTA MODE → mutate 30% of customers
+    if (delta && random.nextInt(100) < 30) {
+        risk = risk.equals("LOW") ? "HIGH" : "LOW";
+        status = status.equals("ACTIVE") ? "SUSPENDED" : "ACTIVE";
+        txnCount += 5;
+        totalValue += 10000;
+    }
+
+    fenergo.add(new FenergoRecord(
+            i,
+            kyc,
+            "Customer_" + i,
+            random.nextBoolean() ? "Individual" : "Business",
+            "IN",
+            risk,
+            snapshotDate
+    ));
+
+    gears.add(new GearsRecord(
+            i,
+            kyc,
+            status,
+            txnCount,
+            totalValue,
+            snapshotDate
+    ));
+}
 
         CsvWriter.writeFenergo(fenergo);
         CsvWriter.writeGears(gears);
