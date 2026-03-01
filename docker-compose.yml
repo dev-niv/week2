@@ -1,8 +1,15 @@
-version: "3.8"
+version: "3.9"
 
 services:
   data-generator:
-    build: ./data-generator-java
+    build: .
+    container_name: data-generator
+    restart: "no"
+
+    environment:
+      - SIZE=S
+      - SEED=42
+      - SNAPSHOT_DATE=2026-02-01
+
     volumes:
-      - ./output:/output
-    command: ["S"]
+      - ./output:/app/output
