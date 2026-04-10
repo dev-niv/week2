@@ -1,0 +1,25 @@
+package main;
+
+public class Main {
+    public static void main(String[] args) {
+
+        System.out.println("=== Base Model ===");
+        BaseModel base = new BaseModel("Model X - Base");
+        base.start();
+        base.showFeatures();
+        base.applyEmergencyBrake();
+
+        System.out.println("\n=== Mid Model ===");
+        MidModel mid = new MidModel("Model X - Mid");
+        mid.start();
+        mid.showFeatures();
+        mid.playMedia();
+
+        System.out.println("\n=== Top Model ===");
+        TopModel top = new TopModel("Model X - Top");
+        top.start();
+        top.showFeatures();
+        top.enableAutoPilot();
+        top.remoteStart();
+    }
+}
